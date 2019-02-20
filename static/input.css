@@ -1,0 +1,46 @@
+.custom-input-box {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.custom-input-lable {
+	width: 100%;
+}
+
+.custom-input {
+	/* width: 100%; */
+	padding: 0.5rem;
+}
+
+.custom-input:focus {
+	outline: none;
+}
+
+.error-lable {
+	color: red;
+}
+
+.error {
+	color: red;
+	border: 1px solid red;
+}
+
+.btn {
+	font-size: 2rem;
+	padding: 1rem 2rem;
+	border: 1px solid #8e8e9e;
+	border-radius: 4px;
+	background-color: #eee;
+	margin-top: 3rem;
+	margin-left: 5rem;
+}
+
+.btn:focus {
+	outline: none;
+}
+
+.btn:disabled {
+	cursor: not-allowed;
+	background-color: #c4c4dc;
+}
