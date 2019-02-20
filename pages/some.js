@@ -1,7 +1,6 @@
-import { useState } from "react";
-
 import Layout from "../components/Layout";
 import Input from "../components/input";
+import userHook from "../components/useState";
 
 export default () => {
 	const initForm = {
@@ -36,38 +35,12 @@ export default () => {
 		isValid: false
 	};
 
-	const validate = (rules, value) => {
-		let isValid = true;
-		if (rules.required) {
-			isValid = value.trim() !== "" && isValid;
-		}
-
-		return isValid;
-	};
-
-	const [newFormElem, setForm] = useState(initForm);
+	const [newFormElem, { setNew }] = userHook(initForm);
 
 	const onChange = e => {
 		const { name, value } = e.target;
 
-		setForm(newFormElem => {
-			const valid = validate(newFormElem[name].validation, value);
-
-			const otherValid = Object.keys(newFormElem).some(
-				el => checkObject(newFormElem[el]) && !newFormElem[el].valid
-			);
-
-			return {
-				...newFormElem,
-				[name]: {
-					...newFormElem[name],
-					value,
-					valid,
-					touch: true
-				},
-				isValid: !otherValid && valid
-			};
-		});
+		setNew({ name, value });
 	};
 
 	const submit = e => {

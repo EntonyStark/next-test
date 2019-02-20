@@ -1,7 +1,6 @@
-import { useState } from "react";
-
 import Layout from "../components/Layout";
 import Input from "../components/input";
+import userHook from "../components/useState";
 
 const clone = () => {
 	const initForm = {
@@ -67,50 +66,14 @@ const clone = () => {
 
 	const checkObject = obj => Object.prototype.toString.call(obj) === "[object Object]";
 
-	const validate = (rules, value, otherField) => {
-		let isValid = true;
-		if (rules.required) {
-			isValid = value.trim() !== "" && isValid;
-		}
+	const [newFormElem, { setNew }] = userHook(initForm);
 
-		if (rules.sameWithPassword) {
-			isValid = value.trim() !== "" && otherField.password.value.trim() === value.trim() && isValid;
-		}
-
-		return isValid;
-	};
-
-	const [newFormElem, setForm] = useState(initForm);
-
-	const submit = () => console.log("lol");
+	const submit = () => console.log("setNew");
 
 	const onChange = e => {
 		const { name, value } = e.target;
 
-		setForm(newFormElem => {
-			const valid = validate(newFormElem[name].validation, value, newFormElem);
-
-			const otherValid = Object.keys(newFormElem)
-				.reduce(
-					(prev, el) =>
-						checkObject(newFormElem[el]) && newFormElem[el] !== newFormElem[name]
-							? [...prev, newFormElem[el].valid]
-							: prev,
-					[]
-				)
-				.indexOf(false);
-
-			return {
-				...newFormElem,
-				[name]: {
-					...newFormElem[name],
-					value,
-					valid,
-					touch: true
-				},
-				isValid: otherValid === -1 && valid
-			};
-		});
+		setNew({ name, value });
 	};
 
 	return (
